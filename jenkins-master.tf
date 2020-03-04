@@ -1,5 +1,5 @@
 resource "aws_instance" "jenkins_server" {
-  ami                    = "ami-951945d0"
+  ami                    = "ami-0bce08e823ed38bdd"
   instance_type          = "t1.micro"
   key_name               = "${aws_key_pair.jenkins_server.key_name}"
   subnet_id              =  local.subnet_ids_list[0]
