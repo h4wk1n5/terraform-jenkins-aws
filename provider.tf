@@ -1,4 +1,4 @@
 provider "aws" {
   region  = "us-west-1"
-  profile = "VinicioLedezma"
+  profile = "${var.myprofile}"
 }

@@ -4,7 +4,7 @@
 
 resource "aws_security_group" "jenkins_server" {
   name        = "jenkins_server"
-  description = "Jenkins Server: created by Terraform for [VinicioLedezma]"
+  description = "Jenkins Server: created by Terraform for ${var.myprofile}"
   vpc_id      = "${data.aws_vpc.default_vpc.id}"
 
   tags = {
@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "jenkins_server_from_source_ingress_ssh" {
   to_port           = 22
   protocol          = "tcp"
   security_group_id = "${aws_security_group.jenkins_server.id}"
-  cidr_blocks       = ["4.35.154.34/32", "172.0.0.0/8"]
+  cidr_blocks       = ["${var.myip}", "172.0.0.0/8"]
   description       = "ssh to jenkins_server"
 }
 
