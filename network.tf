@@ -60,7 +60,7 @@ resource "aws_security_group_rule" "jenkins_server_outbound_all_80" {
   protocol          = "tcp"
   security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
-  description       = "allow jenkins servers for outbound yum"
+  description       = "allow jenkins servers for outbound to repo"
 }
 
 resource "aws_security_group_rule" "jenkins_server_outbound_all_443" {
@@ -70,5 +70,5 @@ resource "aws_security_group_rule" "jenkins_server_outbound_all_443" {
   protocol          = "tcp"
   security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
-  description       = "allow jenkins servers for outbound yum"
+  description       = "allow jenkins servers for outbound to repo"
 }
