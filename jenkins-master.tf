@@ -1,8 +1,9 @@
 resource "aws_instance" "jenkins_server" {
-  ami                    = "ami-0bce08e823ed38bdd"
-  instance_type          = "t1.micro"
-  key_name               = "${aws_key_pair.jenkins_server.key_name}"
-  subnet_id              =  local.subnet_ids_list[0]
+  ami           = "ami-0bce08e823ed38bdd"
+  instance_type = "t1.micro"
+  key_name      = "${aws_key_pair.jenkins_server.key_name}"
+  #subnet_id              =  local.subnet_ids_list[0]
+  subnet_id              = "${aws_subnet.jenkins_subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.jenkins_server.id}"]
   iam_instance_profile   = "jenkins_server"
   depends_on             = [aws_s3_bucket.jenkins-bucket]
@@ -18,7 +19,7 @@ resource "aws_instance" "jenkins_server" {
 
 locals {
   subnet_ids_string = join(",", data.aws_subnet_ids.default_public.ids)
-  subnet_ids_list = split(",", local.subnet_ids_string)
+  subnet_ids_list   = split(",", local.subnet_ids_string)
 }
 
 resource "aws_s3_bucket" "jenkins-bucket" {
@@ -40,7 +41,7 @@ data "template_file" "jenkins_server" {
   template = "${file("scripts/jenkins_install.sh")}"
 
   vars = {
-    env = "dev"
+    env                    = "dev"
     jenkins_admin_password = "${var.jenkins_admin_pass}"
   }
 }

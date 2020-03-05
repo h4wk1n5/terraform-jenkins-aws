@@ -2,8 +2,16 @@ data "aws_vpc" "default_vpc" {
   default = true
 }
 
+data "aws_vpc" "dev-jenkins" {
+  default = true
+}
+
 data "aws_subnet_ids" "default_public" {
   vpc_id = "${data.aws_vpc.default_vpc.id}"
+}
+
+data "aws_subnet_ids" "dev-jenkins" {
+  vpc_id = "${data.aws_vpc.dev-jenkins.id}"
 }
 
 data "aws_security_group" "jenkins_server" {
@@ -11,5 +19,5 @@ data "aws_security_group" "jenkins_server" {
     name   = "group-name"
     values = ["jenkins_server"]
   }
-  depends_on    =  ["aws_security_group.jenkins_server"]
+  depends_on = ["aws_security_group.jenkins_server"]
 }
