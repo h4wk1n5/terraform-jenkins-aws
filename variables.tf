@@ -14,3 +14,17 @@ variable "jenkins_admin_pass" {
 
 variable "ami_key_pair_name" {}
 
+variable "aws_region" {
+  type        = string
+  description = "aws region"
+}
+
+variable "aws_availability_zone" {
+  type        = string
+  description = "a single aws availability zone within a region"
+}
+
+variable "jenkins-ami-name" {
+  type       = string
+}
+
