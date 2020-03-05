@@ -1,7 +1,7 @@
 resource "aws_instance" "jenkins_server" {
   ami           = "ami-0bce08e823ed38bdd"
   instance_type = "t1.micro"
-  key_name      = "${aws_key_pair.jenkins_server.key_name}"
+  key_name      = "${var.ami_key_pair_name}"
   #subnet_id              =  local.subnet_ids_list[0]
   subnet_id              = "${aws_subnet.jenkins_subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.jenkins_server.id}"]
@@ -33,8 +33,8 @@ resource "aws_eip" "jenkins_ip" {
 }
 
 resource "aws_key_pair" "jenkins_server" {
-  key_name   = "jenkins_server"
-  public_key = "${file("keys/jenkins_key.pub")}"
+  key_name   = "${var.ami_key_pair_name}"
+  public_key = "${file("./keys/jenkins_server.pub")}"
 }
 
 data "template_file" "jenkins_server" {
@@ -56,4 +56,12 @@ output "jenkins_server_public_ip" {
 
 output "jenkins_server_private_ip" {
   value = "${aws_instance.jenkins_server.private_ip}"
+}
+
+output "key_name" {
+  value = "${aws_instance.jenkins_server.key_name}"
+}
+
+output "key_value"  {
+  value = "${aws_key_pair.jenkins_server.public_key}"
 }

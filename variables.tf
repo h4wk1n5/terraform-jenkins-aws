@@ -12,3 +12,5 @@ variable "jenkins_admin_pass" {
   description = "jenkins admin password"
 }
 
+variable "ami_key_pair_name" {}
+
