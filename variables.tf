@@ -25,6 +25,6 @@ variable "aws_availability_zone" {
 }
 
 variable "jenkins-ami-name" {
-  type       = string
+  type = string
 }
 

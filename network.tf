@@ -99,9 +99,9 @@ resource "aws_route_table" "jenkins_route_table" {
 }
 
 resource "aws_subnet" "jenkins_subnet" {
-  cidr_block = "${cidrsubnet(aws_vpc.dev_jenkins.cidr_block, 3, 1)}"
-  vpc_id     = "${aws_vpc.dev_jenkins.id}"
-  availability_zone =  "${var.aws_availability_zone}"
+  cidr_block        = "${cidrsubnet(aws_vpc.dev_jenkins.cidr_block, 3, 1)}"
+  vpc_id            = "${aws_vpc.dev_jenkins.id}"
+  availability_zone = "${var.aws_availability_zone}"
 }
 
 resource "aws_route_table_association" "subnet-association" {

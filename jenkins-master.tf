@@ -7,7 +7,7 @@ resource "aws_instance" "jenkins_server" {
   vpc_security_group_ids = ["${data.aws_security_group.jenkins_server.id}"]
   iam_instance_profile   = "jenkins_server"
   depends_on             = [aws_s3_bucket.jenkins-bucket]
-  user_data              = "${data.template_file.jenkins_server.rendered}, ${data.template_file.prep_server.rendered}"
+  user_data              = "${data.template_file.jenkins_server.rendered}"
 
   tags = {
     "Name" = "jenkins_server"
@@ -34,20 +34,11 @@ resource "aws_eip" "jenkins_ip" {
 
 resource "aws_key_pair" "jenkins_server" {
   key_name   = "${var.ami_key_pair_name}"
-  public_key = "${file("./keys/jenkins_server.pub")}"
+  public_key = "${file("keys/jenkins_server.pub")}"
 }
 
 data "template_file" "jenkins_server" {
-  template = "${file("scripts/jenkins_install.sh")}"
-
-  vars = {
-    env                    = "dev"
-    jenkins_admin_password = "${var.jenkins_admin_pass}"
-  }
-}
-
-data "template_file" "prep_server" {
-  template = "${file("scripts/prep_ami_linux2.sh")}"
+  template = "${file("scripts/jenkins_cloudinit.yml")}"
 }
 
 output "jenkins_server_public_ip" {
@@ -62,6 +53,6 @@ output "key_name" {
   value = "${aws_instance.jenkins_server.key_name}"
 }
 
-output "key_value"  {
+output "key_value" {
   value = "${aws_key_pair.jenkins_server.public_key}"
 }
