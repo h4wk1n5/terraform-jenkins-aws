@@ -162,5 +162,7 @@ packages:
  - openjdk-8-jdk 
  - jenkins
  
-# runcmd:
-#  - [systemctl start jenkins]
+runcmd:
+ - [ systemctl, daemon-reload ]
+ - [ systemctl, enable, jenkins.service ]
+ - [ systemctl, start, jenkins.service ]
