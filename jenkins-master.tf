@@ -1,13 +1,14 @@
 resource "aws_instance" "jenkins_server" {
   ami           = "${var.jenkins-ami-name}"
-  instance_type = "t1.micro"
+  instance_type = "t2.small"
   key_name      = "${var.ami_key_pair_name}"
-  #subnet_id              =  local.subnet_ids_list[0]
   subnet_id              = "${aws_subnet.jenkins_subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.jenkins_server.id}"]
   iam_instance_profile   = "jenkins_server"
   depends_on             = [aws_s3_bucket.jenkins-bucket]
   user_data              = "${data.template_file.jenkins_server.rendered}"
+
+  
 
   tags = {
     "Name" = "jenkins_server"
@@ -56,3 +57,5 @@ output "key_name" {
 output "key_value" {
   value = "${aws_key_pair.jenkins_server.public_key}"
 }
+
+

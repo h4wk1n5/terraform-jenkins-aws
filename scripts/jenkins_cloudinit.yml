@@ -161,6 +161,7 @@ package_update: true
 packages:
  - openjdk-8-jdk 
  - jenkins
+ - python
  
 runcmd:
  - [ systemctl, daemon-reload ]
