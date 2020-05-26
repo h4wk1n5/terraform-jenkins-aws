@@ -19,5 +19,5 @@ data "aws_security_group" "jenkins_server" {
     name   = "group-name"
     values = ["jenkins_server"]
   }
-  depends_on = ["aws_security_group.jenkins_server"]
+  depends_on = [aws_security_group.jenkins_server]
 }
